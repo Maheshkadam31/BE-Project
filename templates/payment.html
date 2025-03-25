@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'assets\css\style1.css' %}">
+    <title>Payment Gateway</title>
+</head>
+<body>
+    <div class="payment-container">
+        <h2>Payment Gateway</h2>
+        
+        <!-- Payment Form -->
+        <form id="payment-form" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <label for="upi-id">Enter your UPI ID:</label>
+            <input type="text" id="upi-id" name="upi_id" required placeholder="example@upi" value="{{ form.upi_id.value }}"/>
+
+            <div class="qr-section">
+                <h3>Scan QR Code</h3>
+                <img id="qr-code" src="{% static 'path-to-your-qr-code-image.png' %}" alt="QR Code for Payment" />
+            </div>
+
+            <div class="upload-section">
+                <h3>Upload Transaction Screenshot</h3>
+                <input type="file" id="transaction-screenshot" name="transaction_screenshot" accept="image/*" />
+            </div>
+
+            <button type="submit" id="submit-payment">Submit Payment</button>
+        </form>
+
+        <div id="payment-status" class="status-message"></div>
+    </div>
+
+    <script>
+        document.getElementById('payment-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const upiId = document.getElementById('upi-id').value;
+            const screenshot = document.getElementById('transaction-screenshot').files[0];
+
+            if (!upiId) {
+                alert('Please enter your UPI ID.');
+                return;
+            }
+
+            if (!screenshot) {
+                alert('Please upload a screenshot of your transaction.');
+                return;
+            }
+
+            document.getElementById('payment-status').innerText = 'Processing your payment...';
+
+            setTimeout(() => {
+                document.getElementById('payment-status').innerText = 'Payment successful! Thank you for booking your tickets.';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

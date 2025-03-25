@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ request.user.username }}'s Profile</title>
+    <link href="{% static 'assets\css\main.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="profile-container">
+        <h1>Welcome, {{ request.user.username }}!</h1>
+
+        <div class="profile-details">
+            <h2>Profile Information</h2>
+            <p><strong>Email:</strong> {{ request.user.email }}</p>
+            <p><strong>Phone Number:</strong> {{ user_profile.phone_number|default:"Not provided" }}</p>
+            <p><strong>Address:</strong> {{ user_profile.address|default:"Not provided" }}</p>
+        </div>
+
+        <div class="booking-section">
+            <h2>Your Bookings</h2>
+            {% if bookings %}
+                <ul>
+                    {% for booking in bookings %}
+                        <li>
+                            <p><strong>Event:</strong> {{ booking.event_name }}</p>
+                            <p><strong>Date:</strong> {{ booking.date }}</p>
+                            <p><strong>Seats:</strong> {{ booking.seats }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No bookings yet.</p>
+            {% endif %}
+            <a href="{% url 'create_booking' %}" class="btn">Book a New Event</a>
+        </div>
+    </div>
+</body>
+</html>

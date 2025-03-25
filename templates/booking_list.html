@@ -1,0 +1,14 @@
+{% load static %}
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Your Bookings</h2>
+<ul>
+    {% for booking in bookings %}
+        <li>{{ booking.event_name }} on {{ booking.event_date }} - {{ booking.number_of_tickets }} tickets - Status: {{ booking.status }}</li>
+    {% empty %}
+        <li>You have no bookings.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

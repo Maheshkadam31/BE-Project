@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link href="{% static 'assets\css\main.css' %}" rel="stylesheet">
+</head>
+<body>
+    <form method="POST" action="{% url 'signup' %}">
+        {% csrf_token %}
+        <h3>Create Your Account</h3>
+        {{ form.as_p }} 
+        <button type="submit">Signup</button>
+
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </form>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+</body>
+</html>
